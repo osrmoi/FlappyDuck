@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698711823ff49ef479f2915e49312aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FondoInfinito
-  velocidad: 2
+  velocidad: 3.5
   segundoFondo: {fileID: 199526720}
 --- !u!1 &199526718
 GameObject:
@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 1012700241}
   - component: {fileID: 1012700245}
   - component: {fileID: 1012700244}
+  - component: {fileID: 1012700246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -670,7 +671,7 @@ Transform:
   m_GameObject: {fileID: 1012700240}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalPosition: {x: -4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -934,7 +935,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2.5
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -946,6 +947,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1012700246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012700240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a25273b98909d443b7cfd3f00694a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  fuerzaSalto: 8
+  limiteSuperior: 5
+  limiteInferior: -4.5
+  anguloSubida: 25
+  anguloCaida: -45
+  velocidadInclinacion: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
