@@ -318,6 +318,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &370294179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 370294181}
+  - component: {fileID: 370294180}
+  m_Layer: 0
+  m_Name: ObstacleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &370294180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370294179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0ab3e096d16754eb606c250ce66735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawner
+  obstaculosSuperiores:
+  - {fileID: 3489613829674243511, guid: 19fbbee27d5f59f43b2c8e6132ff8cb8, type: 3}
+  - {fileID: 1566726471167648748, guid: 0ef53657f33e33145ab82ca3b9531174, type: 3}
+  obstaculosInferiores:
+  - {fileID: 6922884613741540891, guid: 76b59ad4bc06a024ab8d6c376f4e3a1d, type: 3}
+  - {fileID: 1402512705244701429, guid: 8433305fe266d4549937fc5483895486, type: 3}
+  - {fileID: 2272241846746845402, guid: cfe98b82863239c45bb77eec7d5a5bb3, type: 3}
+  cantidadRondas: 4
+  tiempoMinimo: 1.8
+  tiempoMaximo: 2.8
+  velocidadObstaculos: 2
+  posicionX: 13.5
+  bordeSuperior: 5.4
+  bordeInferior: -5.4
+  variacionAltura: 0.6
+--- !u!4 &370294181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370294179}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,3 +1033,4 @@ SceneRoots:
   - {fileID: 90406424}
   - {fileID: 199526720}
   - {fileID: 1012700243}
+  - {fileID: 370294181}
