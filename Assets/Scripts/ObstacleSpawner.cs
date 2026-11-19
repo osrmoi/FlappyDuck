@@ -47,6 +47,7 @@ public class ObstacleSpawner : MonoBehaviour
     void Update()
     {
         if (generacionCompleta) return;
+        if (GameManager.instancia != null && GameManager.instancia.juegoTerminado) return;
 
         temporizador -= Time.deltaTime;
 
