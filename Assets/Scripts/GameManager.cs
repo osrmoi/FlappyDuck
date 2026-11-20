@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Estado de la Partida")]
     public bool juegoTerminado = false;
     private bool juegoPausado = false;
+    private int obstaculosSuperados = 0;
 
     [Header("Referencias de Escena")]
     public PlayerController jugador;
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     public float velocidadEntradaPatitos = 3.5f;
 
     [Header("Interfaz de Usuario (Paneles y Botones)")]
+    public TextMeshProUGUI textoProgreso;
+    public int totalObstaculosNivel = 20;
     public GameObject botonPausaHUD;
     public GameObject panelPausa;
     public GameObject panelDerrota;
@@ -45,6 +49,7 @@ public class GameManager : MonoBehaviour
         {
             posicionFinalPatitosFelices = patitosFelices.transform.position;
         }
+        ActualizarTextoProgreso();
     }
 
     void Update()
@@ -69,7 +74,28 @@ public class GameManager : MonoBehaviour
         return jugador != null ? jugador.transform.position.x : -4f;
     }
 
-    // --- DERROTA (Opción C) ---
+    public void RegistrarObstaculoSuperado(bool esElUltimo)
+    {
+        if (juegoTerminado) return;
+
+        obstaculosSuperados++;
+        ActualizarTextoProgreso();
+
+        if (esElUltimo || obstaculosSuperados >= totalObstaculosNivel)
+        {
+            IniciarSecuenciaVictoria();
+        }
+    }
+
+    void ActualizarTextoProgreso()
+    {
+        if (textoProgreso != null)
+        {
+            textoProgreso.text = $"{obstaculosSuperados} / {totalObstaculosNivel}";
+        }
+    }
+
+    // --- DERROTA ---
     public void ActivarGameOver()
     {
         if (juegoTerminado) return;
@@ -83,20 +109,17 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SecuenciaDerrota()
     {
-        // 1. Deja ver el impacto con el sprite del pato muerto
         yield return new WaitForSeconds(1.2f);
 
-        // 2. Oculta obstáculos para que no tapen el río y muestra a los patitos tristes
         OcultarObstaculosActivos();
         if (patitosTristes != null) patitosTristes.SetActive(true);
 
         yield return new WaitForSeconds(0.8f);
 
-        // 3. Muestra el cartel de derrota y el botón Replay
         if (panelDerrota != null) panelDerrota.SetActive(true);
     }
 
-    // --- VICTORIA (Opción C) ---
+    // --- VICTORIA ---
     public void IniciarSecuenciaVictoria()
     {
         if (juegoTerminado) return;
@@ -104,7 +127,6 @@ public class GameManager : MonoBehaviour
 
         if (botonPausaHUD != null) botonPausaHUD.SetActive(false);
 
-        // Coloca a los patitos felices fuera del borde derecho y los desliza a su posición en el río
         if (patitosFelices != null)
         {
             patitosFelices.transform.position = new Vector3(13.5f, posicionFinalPatitosFelices.y, posicionFinalPatitosFelices.z);
@@ -112,7 +134,6 @@ public class GameManager : MonoBehaviour
             moviendoPatitosFelices = true;
         }
 
-        // El pato planea hacia el agua junto a sus crías
         if (jugador != null)
         {
             Vector3 destino = posicionFinalPatitosFelices + (Vector3)offsetAterrizaje;
@@ -125,7 +146,6 @@ public class GameManager : MonoBehaviour
         DetenerEscenarioYObstaculos();
         moviendoPatitosFelices = false;
 
-        // Oculta al pato y a los patitos separados para mostrar la imagen del abrazo
         if (jugador != null) jugador.gameObject.SetActive(false);
         if (patitosFelices != null) patitosFelices.SetActive(false);
         if (patitosReencuentro != null) patitosReencuentro.SetActive(true);

@@ -17,13 +17,13 @@ public class MoverObstaculo : MonoBehaviour
     {
         transform.Translate(Vector3.left * velocidad * Time.deltaTime);
 
-        if (esUltimoObstaculo && !yaSuperado && GameManager.instancia != null && !GameManager.instancia.juegoTerminado)
+        if (!yaSuperado && GameManager.instancia != null && !GameManager.instancia.juegoTerminado)
         {
             float posXJugador = GameManager.instancia.ObtenerPosicionXJugador();
             if (transform.position.x < posXJugador)
             {
                 yaSuperado = true;
-                GameManager.instancia.IniciarSecuenciaVictoria();
+                GameManager.instancia.RegistrarObstaculoSuperado(esUltimoObstaculo);
             }
         }
 
