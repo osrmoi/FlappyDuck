@@ -172,6 +172,10 @@ public class ObstacleSpawner : MonoBehaviour
         if (movimiento != null)
         {
             movimiento.velocidad = velocidadObstaculos;
+            if (indiceActual == colaObstaculos.Count)
+            {
+                movimiento.esUltimoObstaculo = true;
+            }
         }
 
         if (indiceActual >= colaObstaculos.Count)
