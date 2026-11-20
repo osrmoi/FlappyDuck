@@ -68,6 +68,11 @@ public class PlayerController : MonoBehaviour
     void Saltar()
     {
         rb.linearVelocity = new Vector2(0f, fuerzaSalto);
+        
+        if (GameManager.instancia != null)
+        {
+            GameManager.instancia.ReproducirSalto();
+        }
     }
 
     void LimitarAltura()

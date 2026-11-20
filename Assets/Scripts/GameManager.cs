@@ -34,6 +34,34 @@ public class GameManager : MonoBehaviour
     public GameObject panelDerrota;
     public GameObject panelVictoria;
 
+    [Header("Audio - Reproductores")]
+    [Tooltip("Arrastra el primer AudioSource (con Loop marcado)")]
+    public AudioSource fuenteMusica;
+    [Tooltip("Arrastra el segundo AudioSource (sin Loop)")]
+    public AudioSource fuenteEfectos;
+
+    [Header("Audio - Clips y Volúmenes")]
+    public AudioClip clipMusica;
+    [Range(0f, 1f)] public float volumenMusica = 0.35f;
+
+    public AudioClip clipSalto;
+    [Range(0f, 1f)] public float volumenSalto = 0.8f;
+
+    public AudioClip clipPunto;
+    [Range(0f, 1f)] public float volumenPunto = 0.8f;
+
+    public AudioClip clipImpactoBonk;
+    [Range(0f, 1f)] public float volumenBonk = 0.9f;
+
+    public AudioClip clipImpactoMartillo;
+    [Range(0f, 1f)] public float volumenMartillo = 0.9f;
+
+    public AudioClip clipPerdiste;
+    [Range(0f, 1f)] public float volumenPerdiste = 0.9f;
+
+    public AudioClip clipVictoria;
+    [Range(0f, 1f)] public float volumenVictoria = 1f;
+
     private Vector3 posicionFinalPatitosFelices;
     private bool moviendoPatitosFelices = false;
 
@@ -49,7 +77,9 @@ public class GameManager : MonoBehaviour
         {
             posicionFinalPatitosFelices = patitosFelices.transform.position;
         }
+
         ActualizarTextoProgreso();
+        IniciarMusicaFondo();
     }
 
     void Update()
@@ -74,12 +104,47 @@ public class GameManager : MonoBehaviour
         return jugador != null ? jugador.transform.position.x : -4f;
     }
 
+    // --- MÉTODOS DE AUDIO ---
+    void IniciarMusicaFondo()
+    {
+        if (fuenteMusica != null && clipMusica != null)
+        {
+            fuenteMusica.clip = clipMusica;
+            fuenteMusica.volume = volumenMusica;
+            fuenteMusica.loop = true;
+            fuenteMusica.Play();
+        }
+    }
+
+    void DetenerMusicaFondo()
+    {
+        if (fuenteMusica != null && fuenteMusica.isPlaying)
+        {
+            fuenteMusica.Stop();
+        }
+    }
+
+    void ReproducirSFX(AudioClip clip, float volumen)
+    {
+        if (fuenteEfectos != null && clip != null && volumen > 0f)
+        {
+            fuenteEfectos.PlayOneShot(clip, volumen);
+        }
+    }
+
+    public void ReproducirSalto()
+    {
+        ReproducirSFX(clipSalto, volumenSalto);
+    }
+
+    // --- PROGRESO ---
     public void RegistrarObstaculoSuperado(bool esElUltimo)
     {
         if (juegoTerminado) return;
 
         obstaculosSuperados++;
         ActualizarTextoProgreso();
+        ReproducirSFX(clipPunto, volumenPunto);
 
         if (esElUltimo || obstaculosSuperados >= totalObstaculosNivel)
         {
@@ -101,6 +166,10 @@ public class GameManager : MonoBehaviour
         if (juegoTerminado) return;
         juegoTerminado = true;
 
+        DetenerMusicaFondo();
+        ReproducirSFX(clipImpactoBonk, volumenBonk);
+        ReproducirSFX(clipImpactoMartillo, volumenMartillo);
+
         DetenerEscenarioYObstaculos();
         if (botonPausaHUD != null) botonPausaHUD.SetActive(false);
 
@@ -113,6 +182,7 @@ public class GameManager : MonoBehaviour
 
         OcultarObstaculosActivos();
         if (patitosTristes != null) patitosTristes.SetActive(true);
+        ReproducirSFX(clipPerdiste, volumenPerdiste);
 
         yield return new WaitForSeconds(0.8f);
 
@@ -149,6 +219,9 @@ public class GameManager : MonoBehaviour
         if (jugador != null) jugador.gameObject.SetActive(false);
         if (patitosFelices != null) patitosFelices.SetActive(false);
         if (patitosReencuentro != null) patitosReencuentro.SetActive(true);
+
+        DetenerMusicaFondo();
+        ReproducirSFX(clipVictoria, volumenVictoria);
 
         StartCoroutine(MostrarCartelVictoriaConRetraso());
     }
@@ -198,6 +271,12 @@ public class GameManager : MonoBehaviour
 
         juegoPausado = !juegoPausado;
         Time.timeScale = juegoPausado ? 0f : 1f;
+
+        if (fuenteMusica != null)
+        {
+            if (juegoPausado) fuenteMusica.Pause();
+            else fuenteMusica.UnPause();
+        }
 
         if (panelPausa != null) panelPausa.SetActive(juegoPausado);
         if (botonPausaHUD != null) botonPausaHUD.SetActive(!juegoPausado);
