@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698711823ff49ef479f2915e49312aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FondoInfinito
-  velocidad: 3.5
+  velocidad: 4.2
   segundoFondo: {fileID: 199526720}
 --- !u!1 &118815115
 GameObject:
@@ -588,7 +588,7 @@ MonoBehaviour:
   cantidadRondas: 4
   separacionMinima: 4.5
   separacionMaxima: 7
-  velocidadObstaculos: 3.5
+  velocidadObstaculos: 4.2
   posicionX: 13.5
   bordeSuperior: 5.4
   bordeInferior: -5.4
